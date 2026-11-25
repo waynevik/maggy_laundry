@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Laundry Management System</title>
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body>
+    <div class="sidebar" id="sidebar">
+      <div class="logo">LMS</div>
+      <div class="business-name">Laundry Management System</div>
+
+      <ul>
+        <li>
+          <button class="active" type="button" data-page="dashboardPage">
+            🏠 <span>Dashboard</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-slide="aboutSlide">
+            ℹ️ <span>About</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-slide="pricesSlide">
+            💰 <span>Services &amp; Prices</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-page="orderPage">
+            👤 <span>Customer Order</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-page="receiptPage">
+            🧾 <span>Customer Receipt</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-page="statusPage">
+            👕 <span>Laundry Status</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-page="smsPage">
+            📱 <span>SMS Notification</span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="logout">
+        <button type="button" id="logoutButton">Logout</button>
+      </div>
+    </div>
+
+    <div class="main" id="main">
+      <div class="topbar">
+        <button class="menu-button" type="button" aria-label="Toggle menu">
+          ☰
+        </button>
+        <div class="welcome">
+          <h2>Welcome to your dashboard</h2>
+          <p>Laundry Management System</p>
+        </div>
+        <div class="staff" id="staffLabel">Staff</div>
+      </div>
+
+      <div class="content">
+        <div class="page active" id="dashboardPage">
+          <div class="page-title">
+            <h1>Dashboard</h1>
+            <p>Manage your laundry business from here.</p>
+          </div>
+
+          <div class="cards">
+            <div class="card">
+              <h3>Total Orders</h3>
+              <strong id="totalOrders">0</strong>
+            </div>
+            <div class="card">
+              <h3>Pending Orders</h3>
+              <strong id="pendingOrders">0</strong>
+            </div>
+            <div class="card">
+              <h3>Ready for Pickup</h3>
+              <strong id="readyOrders">0</strong>
+            </div>
+            <div class="card">
+              <h3>Customers</h3>
+              <strong id="totalCustomers">0</strong>
+            </div>
+          </div>
+
+          <div class="dashboard-box">
+            <div class="box-heading">
+              <h2>Recent Orders</h2>
+              <p>Latest customer laundry orders.</p>
+            </div>
+            <div class="table-wrapper">
+              <table class="recent-orders">
+                <thead>
+                  <tr>
+                    <th>Order No.</th>
+                    <th>Customer</th>
+                    <th>Service</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                    <th>Paid</th>
+                    <th>Balance</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recentOrdersBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="orderPage">
+          <div class="page-title">
+            <h1>Customer Order</h1>
+            <p>Record a new customer laundry order.</p>
+          </div>
+          <p class="soon-note">
+            This section will be added next. The dashboard already counts the
+            orders saved in the demo data.
+          </p>
+        </div>
+
+        <div class="page" id="receiptPage">
+          <div class="page-title">
+            <h1>Customer Receipt</h1>
+            <p>Print a customer receipt.</p>
+          </div>
+          <p class="soon-note">
+            Receipt viewing and printing will be added next.
+          </p>
+        </div>
+
+        <div class="page" id="statusPage">
+          <div class="page-title">
+            <h1>Laundry Status</h1>
+            <p>Update the progress of customer laundry.</p>
+          </div>
+          <p class="soon-note">
+            Status updates will be added next. Current statuses already appear
+            on the dashboard.
+          </p>
+        </div>
+
+        <div class="page" id="smsPage">
+          <div class="page-title">
+            <h1>Customer SMS Notification</h1>
+            <p>One-way notification when laundry is ready.</p>
+          </div>
+          <p class="soon-note">SMS notifications will be added next.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-panel" id="aboutSlide">
+      <div class="slide-header">
+        <h2>About Our Laundry</h2>
+        <button
+          class="close-button"
+          type="button"
+          data-close="aboutSlide"
+          aria-label="Close"
+        >
+          ×
+        </button>
+      </div>
+      <div class="slide-content">
+        <h3>About the Business</h3>
+        <p>
+          Our laundry business provides professional clothing and household
+          textile cleaning services. We are committed to providing reliable,
+          quality and careful laundry services to every customer.
+        </p>
+        <h3>Our Services</h3>
+        <ul>
+          <li>Gown Cleaning</li>
+          <li>Household Textile Cleaning</li>
+          <li>Dry Cleaning</li>
+          <li>Pressing / Ironing Only</li>
+          <li>Wash / Cleaning Only</li>
+          <li>Wash + Iron</li>
+        </ul>
+        <h3>Customer Care</h3>
+        <p>
+          Every customer should be treated with respect, patience and
+          professionalism.
+        </p>
+        <ul>
+          <li>Welcome customers politely.</li>
+          <li>Listen carefully to their needs.</li>
+          <li>Explain prices clearly.</li>
+          <li>Record customer information correctly.</li>
+          <li>Handle clothes carefully.</li>
+          <li>Confirm the customer's order before accepting it.</li>
+          <li>Confirm payment and any outstanding balance.</li>
+          <li>Keep customer information confidential.</li>
+          <li>Inform customers when their clothes are ready.</li>
+          <li>Resolve complaints politely and professionally.</li>
+        </ul>
+        <h3>Staff Responsibilities</h3>
+        <ul>
+          <li>Register every customer order.</li>
+          <li>Record the clothes received.</li>
+          <li>Check the customer's payment.</li>
+          <li>Update the laundry status.</li>
+          <li>
+            Ensure the correct clothes are returned to the correct customer.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="slide-panel" id="pricesSlide">
+      <div class="slide-header">
+        <h2>Services &amp; Prices</h2>
+        <button
+          class="close-button"
+          type="button"
+          data-close="pricesSlide"
+          aria-label="Close"
+        >
+          ×
+        </button>
+      </div>
+      <div class="slide-content">
+        <p>Current laundry service prices in <strong>KSh</strong>.</p>
+        <table class="price-chart">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Gown Cleaning</td>
+              <td class="price">KSh 500</td>
+            </tr>
+            <tr>
+              <td>Household Textile Cleaning</td>
+              <td class="price">KSh 800</td>
+            </tr>
+            <tr>
+              <td>Dry Cleaning</td>
+              <td class="price">KSh 300</td>
+            </tr>
+            <tr>
+              <td>Pressing (Ironing) Only</td>
+              <td class="price">KSh 150</td>
+            </tr>
+            <tr>
+              <td>Wash (Cleaning Only)</td>
+              <td class="price">KSh 200</td>
+            </tr>
+            <tr>
+              <td>Wash + Iron</td>
+              <td class="price">KSh 300</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="price-note">
+          These are sample prices. You can change them to your actual laundry
+          prices.
+        </p>
+      </div>
+    </div>
+
+    <script src="js/store.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>
