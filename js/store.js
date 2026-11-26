@@ -218,12 +218,136 @@ var Store = (function () {
     sessionStorage.removeItem(SESSION_KEY);
   }
 
+  var SERVICES = {
+    "Gown Cleaning": 500,
+    "Household Textile Cleaning": 800,
+    "Dry Cleaning": 300,
+    "Pressing (Ironing) Only": 150,
+    "Wash (Cleaning Only)": 200,
+    "Wash + Iron": 300
+  };
+
+  function nextId(list) {
+    var max = 0;
+    list.forEach(function (item) {
+      if (item.id > max) {
+        max = item.id;
+      }
+    });
+    return max + 1;
+  }
+
+  function orderNumber(existing) {
+    var now = new Date();
+    function pad(value) {
+      return value < 10 ? "0" + value : String(value);
+    }
+    var stamp =
+      String(now.getFullYear()) +
+      pad(now.getMonth() + 1) +
+      pad(now.getDate()) +
+      pad(now.getHours()) +
+      pad(now.getMinutes()) +
+      pad(now.getSeconds());
+    var number;
+    var taken = {};
+    existing.forEach(function (order) {
+      taken[order.orderNumber] = true;
+    });
+    do {
+      number = "LMS-" + stamp + "-" + (100 + Math.floor(Math.random() * 900));
+    } while (taken[number]);
+    return number;
+  }
+
+  function saveOrder(input, session) {
+    var name = String(input.customerName || "").trim();
+    var contact = String(input.contact || "").trim();
+    var service = String(input.service || "").trim();
+    var details = String(input.orderDetails || "").trim();
+    var quantity = parseInt(input.quantity, 10) || 0;
+    var paidRaw = String(input.amountPaid == null ? "" : input.amountPaid).trim();
+    var paid = paidRaw === "" ? 0 : parseFloat(paidRaw);
+    var pickup = String(input.pickupArrangement || "Customer Collection").trim();
+
+    if (!session) {
+      return { ok: false, message: "Please sign in again." };
+    }
+
+    if (name === "" || contact === "" || service === "" || quantity < 1) {
+      return { ok: false, message: "Please fill in all required fields." };
+    }
+
+    if (!SERVICES.hasOwnProperty(service)) {
+      return { ok: false, message: "Please select a laundry service." };
+    }
+
+    if (isNaN(paid) || paid < 0) {
+      return { ok: false, message: "Amount paid cannot be negative." };
+    }
+
+    var price = SERVICES[service];
+    var total = price * quantity;
+
+    if (paid > total) {
+      return {
+        ok: false,
+        message: "Amount paid cannot be greater than the total cost."
+      };
+    }
+
+    var data = load();
+    var customer = null;
+    for (var i = 0; i < data.customers.length; i += 1) {
+      if (data.customers[i].contact === contact) {
+        customer = data.customers[i];
+        customer.name = name;
+        break;
+      }
+    }
+
+    if (!customer) {
+      customer = {
+        id: nextId(data.customers),
+        name: name,
+        contact: contact
+      };
+      data.customers.push(customer);
+    }
+
+    var order = {
+      id: nextId(data.orders),
+      orderNumber: orderNumber(data.orders),
+      customerId: customer.id,
+      staffName: session.fullName,
+      service: service,
+      orderDetails: details,
+      quantity: quantity,
+      price: price,
+      totalCost: total,
+      amountPaid: paid,
+      balance: total - paid,
+      pickupArrangement: pickup || "Customer Collection",
+      laundryStatus: "Received",
+      createdAt: new Date().toISOString()
+    };
+
+    data.orders.push(order);
+    save(data);
+
+    return { ok: true, orderNumber: order.orderNumber };
+  }
+
   return {
     load: load,
     reset: reset,
     findUser: findUser,
     dashboardStats: dashboardStats,
     recentOrders: recentOrders,
+    saveOrder: saveOrder,
+    servicePrice: function (name) {
+      return SERVICES.hasOwnProperty(name) ? SERVICES[name] : 0;
+    },
     getSession: getSession,
     setSession: setSession,
     clearSession: clearSession

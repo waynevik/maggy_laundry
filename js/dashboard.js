@@ -10,6 +10,7 @@
 
   document.getElementById("staffLabel").textContent =
     (session.role === "admin" ? "Admin: " : "Staff: ") + session.fullName;
+  document.getElementById("staffAttending").value = session.fullName;
 
   function money(amount) {
     return (
@@ -145,6 +146,83 @@
       main.classList.toggle("expanded");
     }
   }
+
+  var priceInput = document.getElementById("price");
+  var quantityInput = document.getElementById("quantity");
+  var totalInput = document.getElementById("total_cost");
+  var paidInput = document.getElementById("amount_paid");
+  var balanceInput = document.getElementById("balance");
+  var serviceInput = document.getElementById("service");
+  var orderForm = document.getElementById("orderForm");
+  var savedBanner = document.getElementById("savedBanner");
+
+  function calculateTotal() {
+    var price = Store.servicePrice(serviceInput.value);
+    var quantity = parseInt(quantityInput.value, 10) || 0;
+    var total = price * quantity;
+    var paid = parseFloat(paidInput.value);
+    if (isNaN(paid) || paid < 0) {
+      paid = 0;
+    }
+    var balance = total - paid;
+    if (balance < 0) {
+      balance = 0;
+    }
+
+    priceInput.value = price;
+    totalInput.value = total.toFixed(2);
+    balanceInput.value = balance.toFixed(2);
+    paidInput.classList.toggle("input-error", paid > total && total >= 0);
+  }
+
+  serviceInput.addEventListener("change", calculateTotal);
+  quantityInput.addEventListener("input", calculateTotal);
+  paidInput.addEventListener("input", calculateTotal);
+
+  document.getElementById("clearOrder").addEventListener("click", function () {
+    window.setTimeout(function () {
+      document.getElementById("staffAttending").value = session.fullName;
+      priceInput.value = "0";
+      totalInput.value = "0.00";
+      balanceInput.value = "0.00";
+      paidInput.classList.remove("input-error");
+    }, 0);
+  });
+
+  orderForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var result = Store.saveOrder(
+      {
+        customerName: document.getElementById("customer_name").value,
+        contact: document.getElementById("contact").value,
+        service: serviceInput.value,
+        quantity: quantityInput.value,
+        amountPaid: paidInput.value,
+        pickupArrangement: document.getElementById("pickup_arrangement").value,
+        orderDetails: document.getElementById("order_details").value
+      },
+      session
+    );
+
+    if (!result.ok) {
+      window.alert(result.message);
+      calculateTotal();
+      return;
+    }
+
+    orderForm.reset();
+    document.getElementById("staffAttending").value = session.fullName;
+    calculateTotal();
+    renderStats();
+    renderOrders();
+    document.getElementById("savedOrderNumber").textContent = result.orderNumber;
+    savedBanner.hidden = false;
+    showPage("dashboardPage", document.querySelector("[data-page='dashboardPage']"));
+  });
+
+  document.getElementById("savedClose").addEventListener("click", function () {
+    savedBanner.hidden = true;
+  });
 
   menuButton.addEventListener("click", toggleSidebar);
 

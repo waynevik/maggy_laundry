@@ -7,6 +7,22 @@
     <link rel="stylesheet" href="css/dashboard.css" />
   </head>
   <body>
+    <div class="success-message" id="savedBanner" hidden>
+      <strong>Order Recorded Successfully!</strong>
+      <br />
+      Order Number: <strong id="savedOrderNumber"></strong>
+      <br />
+      The customer order has been saved.
+      <button
+        type="button"
+        class="success-close"
+        id="savedClose"
+        aria-label="Close"
+      >
+        ×
+      </button>
+    </div>
+
     <div class="sidebar" id="sidebar">
       <div class="logo">LMS</div>
       <div class="business-name">Laundry Management System</div>
@@ -118,14 +134,130 @@
         </div>
 
         <div class="page" id="orderPage">
-          <div class="page-title">
-            <h1>Customer Order</h1>
+          <div class="page-header">
+            <h2>Customer Order</h2>
             <p>Record a new customer laundry order.</p>
           </div>
-          <p class="soon-note">
-            This section will be added next. The dashboard already counts the
-            orders saved in the demo data.
-          </p>
+
+          <div class="order-card">
+            <form id="orderForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="staffAttending"
+                    >Staff Attending to Customer</label
+                  >
+                  <input type="text" id="staffAttending" readonly />
+                </div>
+
+                <div class="form-group">
+                  <label for="customer_name">Customer Name *</label>
+                  <input
+                    type="text"
+                    id="customer_name"
+                    placeholder="Enter customer name"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="contact">Customer Contact *</label>
+                  <input
+                    type="tel"
+                    id="contact"
+                    placeholder="07XXXXXXXX"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="service">Service *</label>
+                  <select id="service" required>
+                    <option value="">Select Service</option>
+                    <option value="Gown Cleaning">
+                      Gown Cleaning - KSh 500
+                    </option>
+                    <option value="Household Textile Cleaning">
+                      Household Textile Cleaning - KSh 800
+                    </option>
+                    <option value="Dry Cleaning">Dry Cleaning - KSh 300</option>
+                    <option value="Pressing (Ironing) Only">
+                      Pressing (Ironing) Only - KSh 150
+                    </option>
+                    <option value="Wash (Cleaning Only)">
+                      Wash (Cleaning Only) - KSh 200
+                    </option>
+                    <option value="Wash + Iron">Wash + Iron - KSh 300</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="price">Price per Item (KSh)</label>
+                  <input type="number" id="price" value="0" readonly />
+                </div>
+
+                <div class="form-group">
+                  <label for="quantity">Quantity *</label>
+                  <input
+                    type="number"
+                    id="quantity"
+                    value="1"
+                    min="1"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="total_cost">Total Cost (KSh)</label>
+                  <input type="number" id="total_cost" value="0" readonly />
+                </div>
+
+                <div class="form-group">
+                  <label for="amount_paid">Amount Paid (KSh)</label>
+                  <input
+                    type="number"
+                    id="amount_paid"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="balance">Balance (KSh)</label>
+                  <input type="number" id="balance" value="0" readonly />
+                </div>
+
+                <div class="form-group">
+                  <label for="pickup_arrangement">Pickup Arrangement</label>
+                  <select id="pickup_arrangement">
+                    <option value="Customer Collection">
+                      Customer Collection
+                    </option>
+                    <option value="Delivery">Delivery</option>
+                    <option value="Staff Delivery">Staff Delivery</option>
+                  </select>
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="order_details">Order / Clothes Details</label>
+                  <textarea
+                    id="order_details"
+                    placeholder="Example: 3 shirts, 2 trousers, 1 dress..."
+                    rows="4"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="reset" class="reset-button" id="clearOrder">
+                  Clear
+                </button>
+                <button type="submit" class="save-button">
+                  Save Customer Order
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
 
         <div class="page" id="receiptPage">

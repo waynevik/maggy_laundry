@@ -16,7 +16,7 @@ todos:
     status: cancelled
   - id: verify
     content: "Open the app and walk staff vs admin flows: login, order, receipt print, blocked delete, charts"
-    status: in_progress
+    status: completed
 isProject: false
 ---
 

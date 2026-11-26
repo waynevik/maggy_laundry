@@ -184,6 +184,141 @@ body {
   color: #777;
 }
 
+.page-header {
+  margin-bottom: 25px;
+}
+
+.page-header h2 {
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.page-header p {
+  color: #777;
+}
+
+.order-card {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: white;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #172033;
+  box-shadow: 0 0 0 2px rgba(23, 32, 51, 0.08);
+}
+
+.form-group input[readonly] {
+  background-color: #f1f3f5;
+  cursor: not-allowed;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.input-error {
+  border-color: #dc3545 !important;
+  background-color: #fff5f5 !important;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.reset-button,
+.save-button {
+  padding: 13px 22px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.reset-button {
+  border: 1px solid #ccc;
+  background: white;
+  color: #333;
+}
+
+.reset-button:hover {
+  background-color: #f1f1f1;
+}
+
+.save-button {
+  border: none;
+  background-color: #172033;
+  color: white;
+  font-weight: bold;
+}
+
+.save-button:hover {
+  background-color: #26354d;
+}
+
+.success-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  max-width: 450px;
+  padding: 18px 45px 18px 18px;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  font-size: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+  z-index: 5000;
+}
+
+.success-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  color: #155724;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -413,8 +548,28 @@ body {
     margin-left: 0;
   }
 
-  .cards {
+  .cards,
+  .form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .save-button,
+  .reset-button {
+    width: 100%;
+  }
+
+  .success-message {
+    left: 15px;
+    right: 15px;
+    max-width: none;
   }
 
   .content {
